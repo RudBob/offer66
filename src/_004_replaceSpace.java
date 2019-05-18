@@ -66,6 +66,9 @@ public class _004_replaceSpace {
         return new String(resArr);
     }
 
+    /**
+     * 计算在char数组中，target出现的次数
+     */
     private int count(char[] s, char target) {
         int res = 0;
         for (char c : s) {
@@ -75,5 +78,6 @@ public class _004_replaceSpace {
         }
         return res;
     }
+
 
 }
