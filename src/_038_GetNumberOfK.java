@@ -1,6 +1,12 @@
-import java.util.Arrays;
-
+/**
+ * 数字在排序数组中出现的次数
+ */
 public class _038_GetNumberOfK {
+    /**
+     * 直接遍历很好，但是复杂度是O(n)，使用二分查找的变体即可
+     * 一种二分的思路是：查找第一个重复的
+     * 另一种是：查找最后一个重复的.
+     */
     public int GetNumberOfK(int[] array, int k) {
         // 使用二分查找找到第一次出现 k 的地方，和最后一次出现k的地方
         int begin = -1, end = -1;
@@ -15,8 +21,7 @@ public class _038_GetNumberOfK {
     private int binarySearchBegin(int head, int last, int[] a, int k) {
         if (head > last) {
             return -1;
-        }
-        if (a[head] == k) {
+        } else if (a[head] == k) {
             return head;
         }
         int mid = (head + last) >> 1;
@@ -32,8 +37,7 @@ public class _038_GetNumberOfK {
     private int binarySearchEnd(int head, int last, int[] a, int k) {
         if (head > last) {
             return -1;
-        }
-        if (a[last] == k) {
+        } else if (a[last] == k) {
             return last;
         }
         int mid = (head + last) >> 1;

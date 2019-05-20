@@ -1,8 +1,17 @@
+/**
+ * 在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。
+ * 输入一个数组,求出这个数组中的逆序对的总数P。
+ * 并将P对1000000007取模的结果输出。 即输出P%1000000007
+ */
 public class _036_InversePairs {
-
+    // 计数器
     int cnt;
     int[] tmp;
 
+    /**
+     * 排序后，遍历即可；O(n*log(n))
+     * 当然，使用归并时，合并两个数组时，进行计数也可以(这样就省去了遍历造成的可能的O(n^2))
+     */
     public int InversePairs(int[] array) {
         cnt = 0;
         if (array != null) {
@@ -36,7 +45,7 @@ public class _036_InversePairs {
                 tmp[k++] = a[i++];
             else {
                 tmp[k++] = a[j++];
-                cnt += mid - i + 1;  // core code, calculate InversePairs............
+                cnt += mid - i + 1;  // 核心代码，count值加上i举例mid+1的距离，也就是a[i-->mid+1)中的数字
                 cnt %= 1000000007;
             }
         }

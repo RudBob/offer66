@@ -1,10 +1,25 @@
 import java.util.ArrayList;
 
+/**
+ * 找到所有连续的数字，其和为sum.
+ */
 public class _041_FindContinuousSequence {
-    public static void main(String[] args) {
-//        FindContinuousSequence(9);
-    }
-
+    /**
+     * 滑动窗口，当值小于100值，窗口右边界右移，
+     * 当值大于100时，窗口左边界右移
+     * <p>
+     * 比如：
+     * 1    ->sum = 1，窗口右边界右移
+     * 1,2, -> sum = 3
+     * 1,2,3, ->sum = 6
+     * ……
+     * 1,2,3,4,5,6,7,8,9,10,11,12,13,14->sum = 105,窗口左边界右移
+     * 4,5,6,7,8,9,10,11,12,13,14->sum = 99，右边界左移
+     * 4,5,6,7,8,9,10,11,12,13,14,15->sum = 114，左边界右移
+     * 7,8,9,10,11,12,13,14,15->sum = 99,
+     * 7,8,9,10,11,12,13,14,15,16->sum = 115,
+     * 9,10,11,12,13,14,15,16->sum = 100,（结果为100），保存,右边界右移
+     */
     public ArrayList<ArrayList<Integer>> FindContinuousSequence(int sum) {
         //存放结果
         ArrayList<ArrayList<Integer>> result = new ArrayList<>();
@@ -32,33 +47,33 @@ public class _041_FindContinuousSequence {
         return result;
     }
 
+    /**
+     * 标准的暴力，连续的数之和，其实是中位数，比如：9--》16，中位数是12.5,
+     * 所以使用中位数求.,时间复杂度也是O(n).
+     */
     public static ArrayList<ArrayList<Integer>> FindContinuousSequence2(int sum) {
         ArrayList<ArrayList<Integer>> res = new ArrayList<>();
-        ArrayList<Integer> r = null;
-        int max = (int) Math.sqrt(sum + 1);
+        ArrayList<Integer> r;
+        int max = sum / 2 + 1;
         for (int i = max; i >= 2; i--) {
             double k = (sum * 1.0) / i;
-            int kInt = (int) k;
+            int kInt = (int) k, head = 0;
             k -= kInt;
             if (i % 2 == 0 && Double.compare(k, 0.5) == 0) {
                 // 这个数合法，
-                int head = kInt - i / 2 + 1;
-                int end = head + i;
-                if (head <= 0) {
-                    continue;
-                }
-                r = getList(head, end);
-                res.add(r);
+                head = kInt - i / 2 + 1;
             } else if (i % 2 == 1 && Double.compare(k, 0.0) == 0) {
                 // 这个数合法，
-                int head = kInt - (i - 1) / 2;
-                int end = head + i - 1;
-                if (head <= 0) {
-                    continue;
-                }
-                r = getList(head, end);
-                res.add(r);
+                head = kInt - (i - 1) / 2;
+            } else {
+                continue;
             }
+            int end = head + i - 1;
+            if (head <= 0) {
+                continue;
+            }
+            r = getList(head, end);
+            res.add(r);
         }
         return res;
     }
